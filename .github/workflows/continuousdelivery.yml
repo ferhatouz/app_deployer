@@ -34,7 +34,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Switch Branches
-      working-directory: nodejs
+        working-directory: nodejs
         run: |
           git chechout 1.0.0
           ls -l 
