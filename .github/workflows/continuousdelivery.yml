@@ -75,6 +75,6 @@ jobs:
       - name: Push Image
         working-directory: nodejs
         run: |
-          docker push nodejs:1.0.0 us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0   
+          docker push  us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0   
 
 
