@@ -44,4 +44,4 @@ jobs:
       - name: Built Image
         working-directory: nodejs
         run: |
-          docker build -t nodejs:1.0.0
+          docker build -t nodejs:1.0.0 .
