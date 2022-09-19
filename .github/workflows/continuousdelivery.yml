@@ -52,3 +52,29 @@ jobs:
         working-directory: nodejs
         run: |
           docker image tag nodejs:1.0.0 us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0     
+
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: gcloud version 
+
+
+
+      - name: Authenticate to Google Account
+        run: |
+          gcloud auth activate-service-account --key-file="service-account.json"
+          gcloud config set project slmltfqkwlcqdtwu
+
+
+      # Runs a single command using the runners shell
+      - name: Authenticate to Repository
+        run: gcloud auth configure-docker  us-central1-docker.pkg.dev
+          
+
+      # Runs a set of commands using the runners shell
+      - name: Push Image
+        working-directory: nodejs
+        run: |
+          docker push nodejs:1.0.0 us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0   
+
+
