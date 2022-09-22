@@ -1,6 +1,14 @@
-# This is a basic workflow to help you get started with Actions
+env:
+  repo: "https://github.com/ferhatouz/artemis.git"
+  app_version: "1.0.0"
+  project_id: "slmltfqkwlcqdtwu"
+  region: "us-central1"
+  app_name: "artemis"
+
+
 
 name: ContiounusDelivery
+
 
 # Controls when the workflow will run
 on:
@@ -29,29 +37,29 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Clone Repo
         run: |
-          git clone https://github.com/farrukh90/nodejs
+          git clone ${{ env.repo }}
           
 
       # Runs a set of commands using the runners shell
       - name: Switch Branches
-        working-directory: nodejs
+        working-directory: ${{ env.app_name }}
         run: |
-          git checkout 1.0.0
+          git checkout ${{ env.app_version }}
           ls -l 
           
 
       # Runs a set of commands using the runners shell
       - name: Built Image
-        working-directory: nodejs
+        working-directory: ${{ env.app_name }}
         run: |
-          docker build -t nodejs:1.0.0 .
+          docker build -t ${{ env.app_name }}:${{env.app_version }} .
 
 
       # Runs a set of commands using the runners shell
       - name: Tag Image
-        working-directory: nodejs
+        working-directory: ${{ env.app_name }}
         run: |
-          docker image tag nodejs:1.0.0 us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0     
+          docker image tag ${{ env.app_name }}:${{env.app_version }} ${{ env.region }}-docker.pkg.dev/${{ env.project }}/${{ env.app_name }}/${{ env.app_name }}:${{env.app_version }}     
 
 
       # Runs a single command using the runners shell
@@ -63,18 +71,18 @@ jobs:
       - name: Authenticate to Google Account
         run: |
           gcloud auth activate-service-account --key-file="service-account.json"
-          gcloud config set project slmltfqkwlcqdtwu
+          gcloud config set project ${{ env.project }}
 
 
       # Runs a single command using the runners shell
       - name: Authenticate to Repository
-        run: gcloud auth configure-docker  us-central1-docker.pkg.dev
+        run: gcloud auth configure-docker  ${{ env.region }}-docker.pkg.dev
           
 
       # Runs a set of commands using the runners shell
       - name: Push Image
-        working-directory: nodejs
+        working-directory: ${{ env.app_name }}
         run: |
-          docker push  us-central1-docker.pkg.dev/slmltfqkwlcqdtwu/nodejs/nodejs:1.0.0   
+          docker push  ${{ env.region }}-docker.pkg.dev/${{ env.project }}/${{ env.app_name }}/${{ env.app_name }}:${{env.app_version }}   
 
 
